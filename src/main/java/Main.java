@@ -1,21 +1,41 @@
 import java.util.Scanner;
-
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public static int readAge(Scanner scanner) {
         System.out.print("Enter age:");
-        int age = scanner.nextInt();
+        return scanner.nextInt();
+    }
+    public static double readBillAmount(Scanner scanner) {
         System.out.print("Enter Bill amount:");
-        double billAmount = scanner.nextDouble();
-        double discount = 0.0;
-        if (age >= 60) {
+        return scanner.nextDouble();
+    }
+    public static boolean isSeniorCitizen(int age) {
+        return age >= 60;
+    }
+    public static double calculateDiscount(double billAmount, boolean isSenior) {
+        if (isSenior) {
+            return Math.min(billAmount * 0.30, 300);
+        }
+        return 0.0;
+    }
+    public static void displayCustomerType(boolean isSenior) {
+        if (isSenior) {
             System.out.println("Senior Citizen");
-            discount = Math.min(billAmount * 0.30, 300);
         } else {
             System.out.println("Normal User");
         }
-        double finalBillAmount = billAmount - discount;
-        System.out.println("Final Bill amount: " + String.format("%.2f", finalBillAmount));
+    }
+    public static void displayFinalAmount(double finalAmount) {
+        System.out.println("Final Bill amount: " + String.format("%.2f", finalAmount));
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int age = readAge(scanner);
+        double billAmount = readBillAmount(scanner);
+        boolean senior = isSeniorCitizen(age);
+        displayCustomerType(senior);
+        double discount = calculateDiscount(billAmount, senior);
+        double finalAmount = billAmount - discount;
+        displayFinalAmount(finalAmount);
         scanner.close();
     }
 }
